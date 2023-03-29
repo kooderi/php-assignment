@@ -56,24 +56,30 @@ abstract class AbstractCalculator implements CalculatorInterface
     }
 
     /**
+     * Helper to check that a post meets the needed criteria and should be
+     * included in calculations.
+     *
      * @param SocialPostTo $postTo
      *
      * @return bool
      */
     protected function checkPost(SocialPostTo $postTo): bool
     {
+        // Post's date is before the given date range
         if (null !== $this->parameters->getStartDate()
             && $this->parameters->getStartDate() > $postTo->getDate()
         ) {
             return false;
         }
 
+        // Post's date is after the given date range
         if (null !== $this->parameters->getEndDate()
             && $this->parameters->getEndDate() < $postTo->getDate()
         ) {
             return false;
         }
 
+        // If none of the above conditions failed, assume the check passed
         return true;
     }
 
